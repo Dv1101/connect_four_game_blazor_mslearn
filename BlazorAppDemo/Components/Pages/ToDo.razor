@@ -1,0 +1,40 @@
+﻿@page "/todo"
+@rendermode InteractiveServer
+<h3>ToDo (@toDos.Count(t => !t.IsDone))</h3>
+
+<input @bind="newToDo"/>
+<button @onclick="addToDo">Add</button>
+
+<ul>
+    @foreach(var items in toDos)
+    {
+        <li>
+            <input type="checkbox" @bind="items.IsDone"/>
+            <input @bind="items.Title" />
+        </li>
+    }
+</ul>
+
+@code {
+    List<toDoItems> toDos = new();
+    string newToDo = "";
+
+
+
+    public class toDoItems{
+
+        public string Title { get; set; }
+        public bool IsDone { get; set; }
+    }
+
+
+    private void addToDo(MouseEventArgs e)
+    {
+        //throw new NotImplementedException();
+        if (!(string.IsNullOrWhiteSpace(newToDo)))
+        {
+            toDos.Add(new toDoItems {Title = newToDo});
+            newToDo = "";
+        }
+    }
+}
